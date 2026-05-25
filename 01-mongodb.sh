@@ -19,13 +19,16 @@ fi
 VALIDATE () {
 
     if [ $1 -ne 0  ]; then
-        echo -e  "$TIMESTAMP $R [ERROR]  $1 installation failed $N" | tee -a $LOGS_FILE
+        echo -e  "$TIMESTAMP $R [ERROR]  $2 FAILURE $N" | tee -a $LOGS_FILE
         exit 1
     else
-        echo -e " $TIMESTAMP $G [INFO] $1 installed successfully $N" | tee -a $LOGS_FILE
+        echo -e " $TIMESTAMP $G [INFO] $2 SUCCESS $N" | tee -a $LOGS_FILE
     fi
 
 }
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Adding mongodb repo"
+
+dnf install mongodb-org -y &>> $LOGS_FILE
+VALIDATE $? "Installing mongodb"
