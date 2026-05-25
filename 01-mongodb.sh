@@ -27,5 +27,5 @@ VALIDATE () {
 
 }
 
-cp mongodb.repo /etc/yum.repos.d/mongo.repo
+cp mongodb.repo /etc/yum.repos.d
 VALIDATE $? "Adding mongodb repo"
