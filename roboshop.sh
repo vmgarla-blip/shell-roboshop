@@ -9,6 +9,8 @@ for instance in "$@"
 do
   echo "Launching instance for $instance"
 
+  
+
   SG_ID=$(aws ec2 describe-security-groups \
     --filters "Name=group-name,Values=roboshop-${instance}" \
     --query 'SecurityGroups[0].GroupId' \
@@ -18,6 +20,9 @@ do
     --filters "Name=group-name,Values=roboshop-common" \
     --query 'SecurityGroups[0].GroupId' \
     --output text)
+
+    echo "COMMON_SG=$COMMON_SG"
+    echo "SG_ID=$SG_ID"
 
   INSTANCE_ID=$(aws ec2 run-instances \
     --image-id $AMI_ID \
