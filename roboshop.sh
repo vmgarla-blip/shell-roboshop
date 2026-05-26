@@ -31,7 +31,7 @@ do
   --instance-type t3.micro \
   --security-groups "roboshop-common" "roboshop-${instance}" \
   --subnet-id subnet-044d6d915383f4f9b \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-${instance}}]" \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="roboshop-$instance"}]" \
   --query 'Instances[0].InstanceId' \
   --output text
   )
