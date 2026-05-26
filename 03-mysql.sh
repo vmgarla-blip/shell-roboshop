@@ -25,20 +25,13 @@ VALIDATE () {
         echo -e " $TIMESTAMP $G [INFO] $2 SUCCESS $N" | tee -a $LOGS_FILE
     fi
 
-}
 
-dnf module disable redis -y
-dnf module enable redis:7 -y
-dnf install redis -y 
-VALIDATE $? "Installing redis"
+dnf install mysql-server -y 
+VALIDATE $? "Installing mysql"
 
-# sed -i s/127.0.0.1/0.0.0.0/g -e 'protected-mode/ c protected-mode no' /etc/redis/redis.conf
+systemctl enable mysqld
+systemctl start mysqld  
+VALIDATE $? "Starting and Enabling mysql"
 
-sed -i \ -e 's/127.0.0.1/0.0.0.0/g' \ -e '/^protected-mode/c protected-mode no' \ /etc/redis/redis.conf
-
-VALIDATE $? "Allowing remote connection to redis"
-
-systemctl enable --now redis &>> $LOGS_FILE
-systemctl start redis &>> $LOGS_FILE
-
-VALIDATE $? "Starting and Enabling redis"
+mysql_secure_installation --set-root-pass RoboShop@1
+validate $? "Setting mysql root password"
