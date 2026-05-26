@@ -11,18 +11,18 @@ do
 
   
 
-#   SG_ID=$(aws ec2 describe-security-groups \
-#     --filters "Name=group-name,Values=roboshop-${instance}" \
-#     --query 'SecurityGroups[0].GroupId' \
-#     --output text)
+  SG_ID=$(aws ec2 describe-security-groups \
+    --filters "Name=group-name,Values=roboshop-${instance}" \
+    --query 'SecurityGroups[0].GroupId' \
+    --output text)
 
-#   COMMON_SG=$(aws ec2 describe-security-groups \
-#     --filters "Name=group-name,Values=roboshop-common" \
-#     --query 'SecurityGroups[0].GroupId' \
-#     --output text)
+  COMMON_SG=$(aws ec2 describe-security-groups \
+    --filters "Name=group-name,Values=roboshop-common" \
+    --query 'SecurityGroups[0].GroupId' \
+    --output text)
 
-    # echo "COMMON_SG=$COMMON_SG"
-    # echo "SG_ID=$SG_ID"
+    echo "COMMON_SG=$COMMON_SG"
+    echo "SG_ID=$SG_ID"
 
 
 
