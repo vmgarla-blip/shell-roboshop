@@ -26,14 +26,23 @@ do
 
 
 
+#   INSTANCE_ID=$(aws ec2 run-instances \
+#   --image-id ami-0220d79f3f480ecf5 \
+#   --instance-type t3.micro \
+#   --security-groups "roboshop-common" "roboshop-${instance}" \
+#   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="roboshop-$instance"}]" \
+#   --query 'Instances[0].InstanceId' \
+#   --output text
+#   )
+
   INSTANCE_ID=$(aws ec2 run-instances \
-  --image-id ami-0220d79f3f480ecf5 \
-  --instance-type t3.micro \
-  --security-groups "roboshop-common" "roboshop-${instance}" \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="roboshop-$instance"}]" \
-  --query 'Instances[0].InstanceId' \
-  --output text
-  )
+    --image-id $AMI_ID \
+    --instance-type t3.micro \
+    --security-group-ids $COMMON_SG $INSTANCE_SG_PREFIX \
+    --subnet-id $SUBNET_ID \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-${instance}}]" \
+    --query 'Instances[0].InstanceId' \
+    --output text)
 
   echo "Instance ID for $instance is $INSTANCE_ID"
 
