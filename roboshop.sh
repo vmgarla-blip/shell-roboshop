@@ -11,27 +11,31 @@ do
 
   
 
-  SG_ID=$(aws ec2 describe-security-groups \
-    --filters "Name=group-name,Values=roboshop-${instance}" \
-    --query 'SecurityGroups[0].GroupId' \
-    --output text)
+#   SG_ID=$(aws ec2 describe-security-groups \
+#     --filters "Name=group-name,Values=roboshop-${instance}" \
+#     --query 'SecurityGroups[0].GroupId' \
+#     --output text)
 
-  COMMON_SG=$(aws ec2 describe-security-groups \
-    --filters "Name=group-name,Values=roboshop-common" \
-    --query 'SecurityGroups[0].GroupId' \
-    --output text)
+#   COMMON_SG=$(aws ec2 describe-security-groups \
+#     --filters "Name=group-name,Values=roboshop-common" \
+#     --query 'SecurityGroups[0].GroupId' \
+#     --output text)
 
-    echo "COMMON_SG=$COMMON_SG"
-    echo "SG_ID=$SG_ID"
+    # echo "COMMON_SG=$COMMON_SG"
+    # echo "SG_ID=$SG_ID"
+
+for instance in $@
+do
 
   INSTANCE_ID=$(aws ec2 run-instances \
-    --image-id $AMI_ID \
-    --instance-type t3.micro \
-    --security-group-ids $COMMON_SG $SG_ID \
-    --subnet-id $SUBNET_ID \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-${instance}}]" \
-    --query 'Instances[0].InstanceId' \
-    --output text)
+  --image-id ami-0220d79f3f480ecf5 \
+  --instance-type t3.micro \
+  --security-groups "roboshop-common" "roboshop-${instance}" \
+  --subnet-id subnet-044d6d915383f4f9b \
+      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-${instance}}]" \
+      --query 'Instances[0].InstanceId' \
+  --output text
+  )
 
   echo "Instance ID for $instance is $INSTANCE_ID"
 
