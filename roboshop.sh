@@ -38,7 +38,7 @@ do
   INSTANCE_ID=$(aws ec2 run-instances \
     --image-id $AMI_ID \
     --instance-type t3.micro \
-    --security-group-ids $COMMON_SG $INSTANCE_SG_PREFIX \
+    --security-group-ids $COMMON_SG $SG_ID \
     --subnet-id $SUBNET_ID \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-${instance}}]" \
     --query 'Instances[0].InstanceId' \
