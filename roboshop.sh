@@ -24,8 +24,7 @@ do
     # echo "COMMON_SG=$COMMON_SG"
     # echo "SG_ID=$SG_ID"
 
-for instance in $@
-do
+
 
   INSTANCE_ID=$(aws ec2 run-instances \
   --image-id ami-0220d79f3f480ecf5 \
