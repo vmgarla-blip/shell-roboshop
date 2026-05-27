@@ -24,7 +24,7 @@ VALIDATE () {
     else
         echo -e " $TIMESTAMP $G [INFO] $2 SUCCESS $N" | tee -a $LOGS_FILE
     fi
-
+}
 
 dnf install mysql-server -y  &>> $LOGS_FILE
 VALIDATE $? "Installing mysql"
