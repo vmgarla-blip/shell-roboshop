@@ -58,12 +58,10 @@ VALIDATE $? "Downloaded and extracted user code"
 npm install  &>>$LOGS_FILE
 VALIDATE $? "Installing dependencies"
 
-# echo "SCRIPT_DIR=$SCRIPT_DIR" &>>$LOGS_FILE
-# echo "Looking for: $SCRIPT_DIR/user.service" &>>$LOGS_FILE
-# ls -l $SCRIPT_DIR/user.service &>>$LOGS_FILE
 
-# cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
-# VALIDATE $? "Created systemctl service"
+
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
+VALIDATE $? "Created systemctl service"
 
 systemctl daemon-reload &>>$LOGS_FILE
 VALIDATE $? "Reloading systemd"
